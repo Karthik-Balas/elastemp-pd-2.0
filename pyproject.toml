@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elastemp-pd"
+version = "0.2.0"
+description = "Pressure-temperature phase diagrams and metastability workflows for VASP/Phonopy"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+authors = [{name = "Karthik Balasubramanian"}, {name = "Srilok Srinivasan"}]
+dependencies = [
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "pymatgen>=2023.1",
+    "matplotlib>=3.6",
+    "scipy>=1.9",
+    "scikit-learn>=1.2",
+    "phonopy>=3.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "build", "ruff"]
+
+[project.scripts]
+elastemp-pd = "elastemp_pd.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# the synthetic Einstein force constants deliberately break translational invariance
+filterwarnings = ["ignore:.*[Aa]coustic"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
